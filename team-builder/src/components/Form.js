@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 const Form = (props) => {
 
+  const edit = props.edit
+
   const onChange = evt => {
     const { name, value } = evt.target;
     props.update(name, value);
@@ -11,11 +13,12 @@ const Form = (props) => {
   const onSubmit = evt => {
     evt.preventDefault();
     props.submit();
-  }
+  };
+
 
   return (
-    <div className="App">
-      <form onSubmit={onSubmit}>
+    <div className="container">
+      <form onSubmit={onSubmit} className="form container">
         <label>First Name:
           <input
           name="username"
@@ -49,7 +52,7 @@ const Form = (props) => {
           <option>Learn React</option>
           </select>
         </label>
-          <input type="submit" value="Autobots Unite!" />
+          <input type="submit" value="Autobots Unite!" className="button" />
       </form>
     </div>
   );

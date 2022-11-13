@@ -6,20 +6,19 @@ import TeamMember from './components/TeamMember';
 import axios from "axios";
 
 
+
 function App() {
+  const [editID, setEditID] = useState(null);
   const [ teamMates, setTeamMates ] = useState([]);
-
-  console.log(teamMates);
-
   const [ values, setValues ] = useState({
     username: ' ',
     email: ' ',
-    role: ' '
+    role: ' ',
   });
-
+  const [ editMember, setEditMember ] = useState(null);
 
   const onChange = (name, value) => {
-    setValues({ ...values, [name]: value})
+    setValues({ ...values, [name]: value});
   }
 
   
@@ -27,19 +26,30 @@ function App() {
     setTeamMates([values, ...teamMates]);
   }
 
+  const handleEdit = (name, mail, roll) => {
+    setEditMember({
+      username: name,
+      email: mail,
+      role: roll,
+    })
+    // console.log(editMember);
+  }
 
 
-
+  
   return (
     <div>
       <Form
         values={values}
         update={onChange}
         submit={updateForm}
+        edit={editMember}
       />
       {teamMates.map((mate, index) => {
         return (
-          <TeamMember key={mate.index} details={mate}/>
+          <>
+          <TeamMember edit={handleEdit} submit={updateForm}  key={mate.index} details={mate}/>
+          </>
         )
       })
     }
