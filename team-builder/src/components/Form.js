@@ -1,26 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 const Form = (props) => {
-
-  const edit = props.edit
+  const firstRef = useRef(null);
+  const lastRef = useRef(null);
 
   const onChange = evt => {
     const { name, value } = evt.target;
     props.update(name, value);
   };
 
-
   const onSubmit = evt => {
     evt.preventDefault();
     props.submit();
+    evt.target.reset();
   };
 
+  useEffect(() => {
+    
+  }, [props.edit])
 
   return (
     <div className="container">
       <form onSubmit={onSubmit} className="form container">
         <label>First Name:
           <input
+          ref={firstRef}
           name="username"
           type="text"
           placeholder="Name Here"
@@ -30,11 +34,12 @@ const Form = (props) => {
         </label>
         <label>Email:
           <input
+          ref={lastRef}
           name="email"
           placeholder="Enter Email"
           type="email"
           onChange={onChange}
-          vaue={props.values.email}
+          value={props.values.email}
           />
         </label>
         <label>Role:

@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Form from './components/Form';
 import TeamMember from './components/TeamMember';
 import axios from "axios";
@@ -8,7 +8,8 @@ import axios from "axios";
 
 
 function App() {
-  const [editID, setEditID] = useState(null);
+
+  const [ isEditing, setIsEditing ] = useState();
   const [ teamMates, setTeamMates ] = useState([]);
   const [ values, setValues ] = useState({
     username: ' ',
@@ -19,11 +20,13 @@ function App() {
 
   const onChange = (name, value) => {
     setValues({ ...values, [name]: value});
+    //console.log(value);
   }
 
   
   const updateForm = () => {
     setTeamMates([values, ...teamMates]);
+
   }
 
   const handleEdit = (name, mail, roll) => {
@@ -32,9 +35,10 @@ function App() {
       email: mail,
       role: roll,
     })
-    // console.log(editMember);
+    setValues(editMember);
+    //console.log(editMember);
+    console.log(values);
   }
-
 
   
   return (
@@ -48,7 +52,7 @@ function App() {
       {teamMates.map((mate, index) => {
         return (
           <>
-          <TeamMember edit={handleEdit} submit={updateForm}  key={mate.index} details={mate}/>
+          <TeamMember edit={handleEdit} key={mate.index} details={mate}/>
           </>
         )
       })
